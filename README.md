@@ -20,5 +20,9 @@ A simple framework
       - change config.json.copy to config.json and set up you config your database database
     - migrate database
       - migrate with command `python cli.py refresh-initial`
+ 1. run app with command `uvicorn main:app --reload`
+ 1. unittest:
+    - we use pytest for testing with command `pytest path/to/_test.`
+    - to test all `pytest .` 
  
     
