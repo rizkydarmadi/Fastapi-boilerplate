@@ -18,4 +18,7 @@ A simple framework
     - if you have postgresql database in local machine 
       - create database
       - change config.json.copy to config.json and set up you config your database database
+    - migrate database
+      - migrate with command `python cli.py refresh-initial`
+ 
     
