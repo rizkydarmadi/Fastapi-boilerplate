@@ -24,5 +24,24 @@ A simple framework
  1. unittest:
     - we use pytest for testing with command `pytest path/to/_test.`
     - to test all `pytest .` 
- 
     
+ ## Create app
+ 
+ - create a app only with command `python cli.py create-app`
+ - and system will ask you what you app name = eg 
+ ``` 
+ python cli.py create-app
+ what's you app name : city
+ ```
+ - and system will create stucture folder like this:
+ ```
+ city/
+├── city_test.py
+├── endpoints.py
+├── __init__.py
+├── model.py
+├── repository.py
+├── schemas.py
+└── services.py
+ ```
+ 
