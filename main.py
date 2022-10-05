@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import user
+from app.user import user
 
 app = FastAPI(title='Title FastAPI')
 
@@ -12,7 +12,7 @@ app = FastAPI(title='Title FastAPI')
 #     allow_headers=["*"],
 # )
 
-app.include_router(user.auth_router)
+app.include_router(user)
 @app.get("/")
 async def hello():
     return {'Hello': "You Make Me Happy"}

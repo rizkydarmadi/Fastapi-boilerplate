@@ -22,4 +22,4 @@ Session = sessionmaker(engine, future=True)
 Base = declarative_base()
 
 # for alembic automigrations
-from user.model import User
+from app.user.model import User

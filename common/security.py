@@ -8,9 +8,9 @@ import bcrypt
 from jose import JWTError, jwt
 from sqlalchemy.sql.expression import select
 from database import Session
-from user.repository import authRepository
+from app.user.repository import authRepository
 from settings import JWT_PREFIX, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from user.model import User
+from app.user.model import User
 
 class OAuth2PasswordJWT(OAuth2PasswordBearer):
     def __init__(
