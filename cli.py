@@ -69,6 +69,12 @@ def create_app():
 
     f = open('database.py','a')
     f.write(f'\nfrom app.{app}.model import {pythonic_app}')
+    f.close()
+
+    f = open(f'main.py','a')
+    f.write(f'''\n\nfrom app.{app} import {app}_router\napp.include_router({app}_router)''')
+    f.close()
+
 
     print(f'your {name} App created, lets code !!!')
     

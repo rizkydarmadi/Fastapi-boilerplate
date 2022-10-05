@@ -12,7 +12,8 @@ app = FastAPI(title='Title FastAPI')
 #     allow_headers=["*"],
 # )
 
-app.include_router(user)
 @app.get("/")
 async def hello():
     return {'Hello': "You Make Me Happy"}
+
+app.include_router(user)
