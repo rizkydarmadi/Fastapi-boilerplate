@@ -52,7 +52,7 @@ def create_app():
     f.close()
 
     f = open(f'app/{app}/repository.py','w')
-    f.write(f'''from .model import User \nfrom sqlalchemy import select \nfrom database import Session \n\nclass {pythonic_app}Repository:\n  pass''')
+    f.write(f'''from .model import {pythonic_app} \nfrom sqlalchemy import select \nfrom database import Session \n\nclass {pythonic_app}Repository:\n  pass''')
     f.close()
 
     f = open(f'app/{app}/schemas.py','w')
@@ -66,6 +66,9 @@ def create_app():
     f = open(f'app/{app}/{app}_test.py','w')
     f.write(f'''from unittest import IsolatedAsyncioTestCase \n\nclass Test{pythonic_app}App(IsolatedAsyncioTestCase):\n pass # add you unittest <3''')
     f.close()
+
+    f = open('database.py','a')
+    f.write(f'\nfrom app.{app}.model import {pythonic_app}')
 
     print(f'your {name} App created, lets code !!!')
     
