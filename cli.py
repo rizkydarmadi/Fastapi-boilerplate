@@ -75,6 +75,8 @@ def create_app():
     f.write(f'''\n\nfrom app.{app} import {app}_router\napp.include_router({app}_router)''')
     f.close()
 
+    cmd = f'black app/{app}/'
+    os.system(cmd)
 
     print(f'your {name} App created, lets code !!!')
     
