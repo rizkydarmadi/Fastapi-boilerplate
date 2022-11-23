@@ -41,8 +41,6 @@ class OAuth2PasswordJWT(OAuth2PasswordBearer):
                 return None
         return param
 
-oauth2_scheme = OAuth2PasswordJWT(tokenUrl="auth/sign-in")
-
 
 async def generate_jwt_token_from_user(user:User)->str:
     expire = datetime.now() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)

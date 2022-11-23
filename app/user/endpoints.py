@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from common.responses_schemas import BadRequest, InternalServerError,Forbidden
 from .schemas import changePasswordRequest, signUpRequest,signUpResponse,getAllResponses,getDetailResponsesItems,updateRequestUser,updateRequestResponse,changePasswordResponse
 from common.responses_services import common_response
-from common.security import oauth2_scheme,get_user_from_jwt_token
+from common.security import OAuth2PasswordJWT,get_user_from_jwt_token
 from fastapi.security import OAuth2PasswordRequestForm
 from .services import AuthServices
 
@@ -15,7 +15,7 @@ router = APIRouter(
     '403': {'model': Forbidden},
     '500': {'model': InternalServerError},
 })
-async def get_all_user(limit:int=25,terms:str='',token: str = Depends(oauth2_scheme)):
+async def get_all_user(limit:int=25,terms:str='',token: str = Depends(OAuth2PasswordJWT(tokenUrl="auth/sign-in"))):
     user = get_user_from_jwt_token(token)
     result = await AuthServices.get_all(requestUser=user,limit=limit,terms=terms)
     return common_response(result)
@@ -25,7 +25,7 @@ async def get_all_user(limit:int=25,terms:str='',token: str = Depends(oauth2_sch
     '403': {'model': Forbidden},
     '500': {'model': InternalServerError},
 })
-async def get_detail(username=str,token: str = Depends(oauth2_scheme)):
+async def get_detail(username=str,token: str = Depends(OAuth2PasswordJWT(tokenUrl="auth/sign-in"))):
     user = get_user_from_jwt_token(token)
     result = await AuthServices.get_detail(requestUser=user,username=username)
     return common_response(result)
@@ -35,7 +35,7 @@ async def get_detail(username=str,token: str = Depends(oauth2_scheme)):
     '403': {'model': Forbidden},
     '500': {'model': InternalServerError},
 })
-async def update_password(request:updateRequestUser,token: str = Depends(oauth2_scheme)):
+async def update_password(request:updateRequestUser,token: str = Depends(OAuth2PasswordJWT(tokenUrl="auth/sign-in"))):
     user = get_user_from_jwt_token(token)
     result = await AuthServices.update_user(requestUser=user,request=request)
     return common_response(result)
@@ -45,7 +45,7 @@ async def update_password(request:updateRequestUser,token: str = Depends(oauth2_
     '403': {'model': Forbidden},
     '500': {'model': InternalServerError},
 })
-async def update_user(request:changePasswordRequest,token: str = Depends(oauth2_scheme)):
+async def update_user(request:changePasswordRequest,token: str = Depends(OAuth2PasswordJWT(tokenUrl="auth/sign-in"))):
     user = get_user_from_jwt_token(token)
     result = await AuthServices.update_password(requestUser=user,request=request)
     return common_response(result)
@@ -72,7 +72,7 @@ async def generate_token(form_data: OAuth2PasswordRequestForm = Depends()):
     '403': {'model': Forbidden},
     '500': {'model': InternalServerError},
 })
-async def delete_user(username:str,token: str = Depends(oauth2_scheme)):
+async def delete_user(username:str,token: str = Depends(OAuth2PasswordJWT(tokenUrl="auth/sign-in"))):
     user = get_user_from_jwt_token(token)
     result = await AuthServices.delete_user(requestUser=user,username=username)
     return common_response(result)
