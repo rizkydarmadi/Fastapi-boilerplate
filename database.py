@@ -21,5 +21,6 @@ engine = create_engine(
 Session = sessionmaker(engine, future=True)
 Base = declarative_base()
 
+#! close after migrations
 # for alembic automigrations
 from app.user.model import User
