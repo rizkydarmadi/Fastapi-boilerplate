@@ -17,3 +17,12 @@ async def hello():
     return {'Hello': "You Make Me Happy"}
 
 app.include_router(user)
+
+from app.role import role_router
+app.include_router(role_router)
+
+from app.permission import permission_router
+app.include_router(permission_router)
+
+from app.role_permission import role_permission_router
+app.include_router(role_permission_router)
