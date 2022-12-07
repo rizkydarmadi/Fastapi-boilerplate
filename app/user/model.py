@@ -18,5 +18,7 @@ class User(Base):
     intro = Column(Text)
     profile = Column(Text)
     role_id = Column(ForeignKey("role.id"), nullable=False)
+    active = Column(Integer)
+    deleted_at = Column(DateTime(timezone=True))
 
     role = relationship("Role")
