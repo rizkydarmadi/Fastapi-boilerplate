@@ -5,6 +5,7 @@ from database import Session
 import pytz
 from datetime import datetime
 from passlib.context import CryptContext
+from common.utils import SQLutils
 
 
 class authRepository:
@@ -81,37 +82,46 @@ class authRepository:
     def get_all(
         page: int = None, limit: int = None, terms: str = None
     ) -> Tuple[List[User], int]:
+        offset = SQLutils.offset(page=page, limit=limit)
         with Session() as session:
-            pass
-            # stmt = (
-            #     select(User)
-            #     .where(
-            #         or_(
-            #             User.name.ilike(f"%{terms}%"),
-            #             User.username.ilike(f"%{terms}%"),
-            #             User.email.ilike(f"%{terms}%"),
-            #         )
-            #     )
-            #     .where(User.status == True)
-            #     .order_by(User.name.asc())
-            #     .limit(limit=limit)
-            # )
-            # data = session.execute(stmt).scalars().all()
+            stmt = (
+                select(User)
+                .where(
+                    or_(
+                        User.first_name.ilike(f"%{terms}%"),
+                        User.midle_name.ilike(f"%{terms}%"),
+                        User.last_name.ilike(f"%{terms}%"),
+                        User.email.ilike(f"%{terms}%"),
+                        User.intro.ilike(f"%{terms}%"),
+                        User.profile.ilike(f"%{terms}%"),
+                    ),
+                    User.active == 1,
+                )
+                .order_by(User.id.asc())
+                .limit(limit=limit)
+                .offset(offset=offset)
+            )
+            data = session.execute(stmt).scalars().all()
 
-            # stmt2 = (
-            #     select(func.count(User.username))
-            #     .where(
-            #         or_(
-            #             User.name.ilike(f"%{terms}%"),
-            #             User.username.ilike(f"%{terms}%"),
-            #             User.email.ilike(f"%{terms}%"),
-            #         )
-            #     )
-            #     .where(User.status == True)
-            # )
-            # num_data = session.execute(stmt2).scalar()
+            stmt2 = (
+                select(func.count(User.username))
+                .where(
+                    or_(
+                        User.first_name.ilike(f"%{terms}%"),
+                        User.midle_name.ilike(f"%{terms}%"),
+                        User.last_name.ilike(f"%{terms}%"),
+                        User.email.ilike(f"%{terms}%"),
+                        User.intro.ilike(f"%{terms}%"),
+                        User.profile.ilike(f"%{terms}%"),
+                    ),
+                    User.active == 1,
+                )
+                .limit(limit=limit)
+                .offset(offset=offset)
+            )
+            num_data = session.execute(stmt2).scalar()
 
-        # return data, num_data
+        return data, num_data
 
     @staticmethod
     def update_user(
